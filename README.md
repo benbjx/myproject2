@@ -1,3 +1,3 @@
 # myproject2
 
-test
+test KO
