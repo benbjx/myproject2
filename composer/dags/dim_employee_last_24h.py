@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from airflow import models
-from dependencies.helpers import create_tasks, get_layers_directories
+from dependencies.helpers import create_tasks, get_layers_directories, get_pattern_date
 
 default_args = {
 	'start_date': datetime(2020,3,17),
@@ -9,7 +9,7 @@ default_args = {
 }
 
 mon_env = models.Variable.get('gcp_project')
-mon_pattern_date = "LAST_24H"
+mon_pattern_date = get_pattern_date("LAST_24H")
 cron_schedule = "35 3 * * *"
 nom_dag = 'dim_employee_last_24h'
 

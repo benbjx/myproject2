@@ -4,6 +4,10 @@ from airflow.contrib.operators.bigquery_operator import BigQueryOperator
 BASE_SQL_PATH = "/home/airflow/gcs/plugins/sql/"
 LAYERS = ["DRE","DSG", "DWH", "DTS"]
 
+def get_pattern_date(pattern):
+    if pattern.upper() == 'LAST_24H':
+        return ">= DATE(TIMESTAMP(FORMAT_TIMESTAMP('%F %T', CURRENT_TIMESTAMP, 'Europe/Paris')))"
+
 def get_sql_directory(nom_dag):
     return BASE_SQL_PATH + nom_dag + "/"
 
