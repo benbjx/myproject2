@@ -5,8 +5,16 @@ from airflow.contrib.operators.bigquery_operator import BigQueryOperator
 BASE_SQL_PATH = "/home/airflow/gcs/plugins/sql/"
 LAYERS = ["DRE","DSG", "DWH", "DTS"]
 
+def get_pattern_timestamp(pattern):
+    pattern_upper = pattern.upper()
+    if pattern_upper == '5MIN':
+        return ">= FORMAT_TIMESTAMP('%F %T', TIMESTAMP_SUB(CURRENT_TIMESTAMP, INTERVAL 10 MINUTE), 'Europe/Paris')"
+
 def get_pattern_date(pattern):
-    if pattern.upper() == 'LAST_24H':
+    pattern_upper = pattern.upper()
+    if pattern_upper == 'LAST_24H':
+        return ">= DATE(TIMESTAMP(FORMAT_TIMESTAMP('%F %T', CURRENT_TIMESTAMP, 'Europe/Paris')))"
+    elif pattern_upper == '5MIN':
         return ">= DATE(TIMESTAMP(FORMAT_TIMESTAMP('%F %T', CURRENT_TIMESTAMP, 'Europe/Paris')))"
 
 def get_sql_directory(nom_dag):
