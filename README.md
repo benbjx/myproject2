@@ -1,3 +1,3 @@
 # myproject2
 
-test KO
+proposition de structure pour 1 repository
