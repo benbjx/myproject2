@@ -1,3 +1,4 @@
+from os.path import isdir
 from os import listdir
 from airflow.contrib.operators.bigquery_operator import BigQueryOperator
 
@@ -32,12 +33,13 @@ def create_tasks(nom_dag):
     tasks_count = -1
     for layer in LAYERS:
         path = get_layer_directory(nom_dag, layer)
-        for file in listdir(path):
-            if file.endswith(".sql"):
-                tasks_count = tasks_count + 1
-                if tasks_count == 0:
-                    previous_task = create_bq_task(file)
-                else:
-                    task = create_bq_task(file)
-                    task.set_upstream(previous_task)
-                    previous_task = task
+        if isdir(path):
+            for file in listdir(path):
+                if file.endswith(".sql"):
+                    tasks_count = tasks_count + 1
+                    if tasks_count == 0:
+                        previous_task = create_bq_task(file)
+                    else:
+                        task = create_bq_task(file)
+                        task.set_upstream(previous_task)
+                        previous_task = task
