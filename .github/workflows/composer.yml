@@ -34,5 +34,5 @@ jobs:
         with:
           credentials: ${{ secrets.gcp_credentials }}
           path: composer/dags
-          destination: europe-west1-poc-metro-6f747c11-bucket/dags
+          destination: europe-west1-poc-metro-6f747c11-bucket/
           
