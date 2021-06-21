@@ -13,9 +13,11 @@ mon_env = models.Variable.get('gcp_project')
 mon_pattern_date = get_pattern_date("LAST_24H")
 cron_schedule = None
 nom_dag = 'dim_employee_last_24h'
+description  = "exemple de lancement sql"
 
 with models.DAG(
 		nom_dag,
+        description=description,
 		schedule_interval=cron_schedule,
         template_searchpath=get_layers_directories(nom_dag),
 		default_args=default_args,
