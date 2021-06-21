@@ -30,6 +30,6 @@ jobs:
         uses: google-github-actions/upload-cloud-storage@main
         with:
           credentials: ${{ secrets.gcp_credentials }}
-          path: /composer/dags/dim_employee_last_24h.py
+          path: myproject2/composer/dags/dim_employee_last_24h.py 
           destination: europe-west1-poc-metro-6f747c11-bucket/dags/dim_employee_last_24h.py
           
