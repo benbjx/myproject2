@@ -22,12 +22,13 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Runs a set of commands using the runners shell
+      # Runs a set of commands using the runners shell      
+      - uses: actions/checkout@v2
       - name: Start
         run: |
           echo upload DAG to GCS
           pwd
-          ls -d */
+          ls 
       - id: upload-file
         uses: google-github-actions/upload-cloud-storage@main
         with:
