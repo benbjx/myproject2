@@ -28,10 +28,16 @@ jobs:
           echo upload DAG to GCS
           pwd
           ls 
-      - id: upload-file
+      - id: upload-dags
         uses: google-github-actions/upload-cloud-storage@main
         with:
           credentials: ${{ secrets.gcp_credentials }}
           path: composer/dags
+          destination: europe-west1-poc-metro-6f747c11-bucket/
+      - id: upload-plugins
+        uses: google-github-actions/upload-cloud-storage@main
+        with:
+          credentials: ${{ secrets.gcp_credentials }}
+          path: composer/plugins
           destination: europe-west1-poc-metro-6f747c11-bucket/
           
