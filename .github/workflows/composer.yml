@@ -26,8 +26,8 @@ jobs:
       - name: Start
         run: |
           echo upload DAG to GCS
-          ls 
           pwd
+          ls -d */
       - id: upload-file
         uses: google-github-actions/upload-cloud-storage@main
         with:
