@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import models
-from dependencies.helpers import create_tasks, get_layers_directories, get_pattern_date
+from dependencies.helpers import create_tasks, get_layers_directories
+from dependencies.pattern import get_pattern_date
 
 default_args = {
 	'start_date': datetime(2021,6,14),
