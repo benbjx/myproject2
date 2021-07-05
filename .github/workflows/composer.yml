@@ -6,7 +6,7 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main, feature2 ]
+    branches: [ main ]
     paths: [composer/**]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -20,12 +20,11 @@ jobs:
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
+    env:
+      gcp_cred: ${{ fromJSON(secrets.gcp_credentials) }}
     steps:
       # Runs a set of commands using the runners shell      
       - uses: actions/checkout@v2
-      - name: set_env
-        env:
-          $gcp_cred = ${{ secrets.gcp_credentials }}
       - name: Start
         run: |
           echo upload DAG to GCS
