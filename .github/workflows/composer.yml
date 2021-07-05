@@ -12,6 +12,8 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  gcp_credi: ${{ secrets.gcp_credentials }}
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -43,7 +45,7 @@ jobs:
       - id: upload-plugins
         uses: google-github-actions/upload-cloud-storage@main
         with:
-          credentials: ${{ env.gcp_cred }}
+          credentials: ${{ env.gcp_credi }}
           path: composer/plugins
           destination: europe-west1-demo-composer-fdc80108-bucket/
       - id: upload-dags
