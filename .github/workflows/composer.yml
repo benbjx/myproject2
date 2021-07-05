@@ -17,7 +17,9 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  main:
+ 
+    if: ${{ github.ref == 'refs/heads/main' }}
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     environment:
@@ -29,13 +31,49 @@ jobs:
       - uses: actions/checkout@v2
       - name: Start main
         run: |
-          echo upload DAG to GCS
+          echo upload DAG to GCS main
           pwd
           ls 
           echo ${{ secrets.test }}
           echo ${{ secrets.TEST }}
       - name: Start feature2
-        if: ${{ github.ref == 'refs/heads/feature2' }}
+        run: |
+          echo upload DAG to GCS
+          pwd
+          ls 
+          echo ${{ secrets.test }}
+          echo ${{ secrets.TEST }}
+      - id: upload-plugins
+        uses: google-github-actions/upload-cloud-storage@main
+        with:
+          credentials: $gcp_credi
+          path: composer/plugins
+          destination: europe-west1-demo-composer-fdc80108-bucket/
+      - id: upload-dags
+        uses: google-github-actions/upload-cloud-storage@main
+        with:
+          credentials: ${{ env.gcp_cred }}
+          path: composer/dags
+          destination: europe-west1-demo-composer-fdc80108-bucket/
+  feature2: 
+    if: ${{ github.ref == 'refs/heads/feature2' }}
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment:
+      name: main
+    # Steps represent a sequence of tasks that will be executed as part of the job
+   
+    steps:
+      # Runs a set of commands using the runners shell      
+      - uses: actions/checkout@v2
+      - name: Start main
+        run: |
+          echo upload DAG to GCS main
+          pwd
+          ls 
+          echo ${{ secrets.test }}
+          echo ${{ secrets.TEST }}
+      - name: Start feature2
         run: |
           echo upload DAG to GCS
           pwd
