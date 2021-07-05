@@ -6,7 +6,7 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main,feature1 ]
+    branches: [ main,feature2 ]
     #paths: [composer/**]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -22,10 +22,10 @@ jobs:
     steps:
       - id: step1        
         run: |
-          if [[ "${{github.base_ref}}" == "feature2" || "${{github.ref}}" == "refs/heads/feature2" ]]; then
-            echo "::set-output name=test::feature2"
+          if [[ "${{github.base_ref}}" == "main" || "${{github.ref}}" == "refs/heads/main" ]]; then
+            echo "::set-output name=test::main"
           fi
-          if [[ "${{github.ref}}" == "refs/heads/main"]]; then
+          if [[ "${{github.base_ref}}" == "feature2" || "${{github.ref}}" == "refs/heads/feature2" ]]; then
             echo "::set-output name=test::feature2"
           fi
   # This workflow contains a single job called "build"
