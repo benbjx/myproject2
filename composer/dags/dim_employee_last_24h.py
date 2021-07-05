@@ -8,7 +8,7 @@ default_args = {
 	'retries': 0,
 	'retry_delay': timedelta(minutes=5)
 }
-#comment 2
+#comment 3
 mon_env = models.Variable.get('gcp_project')
 mon_pattern_date = get_pattern_date("LAST_24H")
 cron_schedule = None
