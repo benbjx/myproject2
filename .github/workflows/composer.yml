@@ -20,12 +20,14 @@ jobs:
     outputs:
       cred_gcp: ${{ steps.step1.outputs.test }}
     steps:
-      - id: step1
-        if: ${{ github.ref == 'refs/heads/feature2' }}
-        run: echo "::set-output name=test::feature2"
-      - id: step1
-        if: ${{ github.ref == 'refs/heads/main' }}
-        run: echo "::set-output name=test::main"
+      - id: step1        
+        run: |
+          if [[  "${{ github.ref }}"" == "refs/heads/feature2"]]; then
+            echo "::set-output name=test::feature2"
+          fi
+          if [[  "${{ github.ref }}"" == "refs/heads/main"]]; then
+            echo "::set-output name=test::feature2"
+          fi
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
