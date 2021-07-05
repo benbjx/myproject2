@@ -33,13 +33,13 @@ jobs:
       - id: upload-plugins
         uses: google-github-actions/upload-cloud-storage@main
         with:
-          credentials: fromJSON($gcp_cred)
+          credentials: ${{ env.gcp_cred }}
           path: composer/plugins
           destination: europe-west1-demo-composer-fdc80108-bucket/
       - id: upload-dags
         uses: google-github-actions/upload-cloud-storage@main
         with:
-          credentials: $gcp_cred
+          credentials: ${{ env.gcp_cred }}
           path: composer/dags
           destination: europe-west1-demo-composer-fdc80108-bucket/
           
