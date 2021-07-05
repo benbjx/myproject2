@@ -22,7 +22,7 @@ jobs:
     steps:
       - id: step1        
         run: |
-          if [[ "${{github.ref}}" == "refs/heads/feature2"]]; then
+          if [[ "${{github.base_ref}}" == "feature2" || "${{github.ref}}" == "refs/heads/feature2" ]]; then
             echo "::set-output name=test::feature2"
           fi
           if [[ "${{github.ref}}" == "refs/heads/main"]]; then
