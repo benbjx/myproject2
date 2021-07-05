@@ -6,7 +6,7 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [ main, feature2 ]
     paths: [composer/**]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -18,7 +18,8 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    env:
+      gcp_cred: ${{ secrets.gcp_credentials }}
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Runs a set of commands using the runners shell      
@@ -31,13 +32,13 @@ jobs:
       - id: upload-plugins
         uses: google-github-actions/upload-cloud-storage@main
         with:
-          credentials: ${{ secrets.gcp_credentials }}
+          credentials: $gcp_cred
           path: composer/plugins
           destination: europe-west1-demo-composer-fdc80108-bucket/
       - id: upload-dags
         uses: google-github-actions/upload-cloud-storage@main
         with:
-          credentials: ${{ secrets.gcp_credentials }}
+          credentials: $gcp_cred
           path: composer/dags
           destination: europe-west1-demo-composer-fdc80108-bucket/
           
