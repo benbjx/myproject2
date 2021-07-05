@@ -44,8 +44,6 @@ jobs:
           ls 
           echo ${{ secrets.test }}
           echo ${{ secrets.TEST }}
-          echo ${{ secret.test }}
-          echo ${{ secret.TEST }}
       - id: upload-plugins
         uses: google-github-actions/upload-cloud-storage@main
         with:
