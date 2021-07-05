@@ -22,10 +22,10 @@ jobs:
     steps:
       - id: step1        
         run: |
-          if [[  "${{ github.ref }}"" == "refs/heads/feature2"]]; then
+          if [[  "${{ github.ref }}"" == "refs/heads/feature2"]] then
             echo "::set-output name=test::feature2"
           fi
-          if [[  "${{ github.ref }}"" == "refs/heads/main"]]; then
+          if [[  "${{ github.ref }}"" == "refs/heads/main"]] then
             echo "::set-output name=test::feature2"
           fi
   # This workflow contains a single job called "build"
@@ -44,7 +44,6 @@ jobs:
           echo upload DAG to GCS
           pwd
           ls 
-          echo $jobs.setenv.env.gcp_cred
       - id: upload-plugins
         uses: google-github-actions/upload-cloud-storage@main
         with:
