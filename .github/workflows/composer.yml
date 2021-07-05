@@ -23,7 +23,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     environment:
-      name: dev
+      name: main
     # Steps represent a sequence of tasks that will be executed as part of the job
    
     steps:
@@ -55,7 +55,7 @@ jobs:
           credentials: ${{ env.gcp_cred }}
           path: composer/dags
           destination: europe-west1-demo-composer-fdc80108-bucket/
-  feature2: 
+  dev: 
     if: ${{ github.ref == 'refs/heads/feature2' }}
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -67,19 +67,7 @@ jobs:
       # Runs a set of commands using the runners shell      
       - uses: actions/checkout@v2
       - name: Start main
-        run: |
-          echo upload DAG to GCS main
-          pwd
-          ls 
-          echo ${{ secrets.test }}
-          echo ${{ secrets.TEST }}
-      - name: Start feature2
-        run: |
-          echo upload DAG to GCS
-          pwd
-          ls 
-          echo ${{ secrets.test }}
-          echo ${{ secrets.TEST }}
+        uses: ./.github/actions/deployment-action
       - id: upload-plugins
         uses: google-github-actions/upload-cloud-storage@main
         with:

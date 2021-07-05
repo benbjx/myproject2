@@ -1,0 +1,6 @@
+run: |
+  echo upload DAG to GCS main
+  pwd
+  ls 
+  echo ${{ secrets.test }}
+  echo ${{ secrets.TEST }}
