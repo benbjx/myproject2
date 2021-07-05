@@ -6,78 +6,46 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main,feature2 ]
+    branches: [ main,feature1 ]
     paths: [composer/**]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  gcp_credi: ${{ secrets.gcp_credentials }}
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  main:
- 
-    if: ${{ github.ref == 'refs/heads/main' }}
+  build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    environment:
-      name: main
+
     # Steps represent a sequence of tasks that will be executed as part of the job
-   
     steps:
       # Runs a set of commands using the runners shell      
       - uses: actions/checkout@v2
-      - name: Start main
-        run: |
-          echo upload DAG to GCS main
-          pwd
-          ls 
-          echo ${{ secrets.test }}
-          echo ${{ secrets.TEST }}
-      - name: Start feature2
+      - name: setenv
+        if: ${{ github.ref == 'refs/heads/feature1' }}
+        env:
+          $gcp_cred: "cred_dev"
+      - name: setenv
+        if: ${{ github.ref == 'refs/heads/main' }}
+        env:
+          $gcp_cred: "cred_prod"
+      - name: Start
         run: |
           echo upload DAG to GCS
           pwd
           ls 
-          echo ${{ secrets.test }}
-          echo ${{ secrets.TEST }}
       - id: upload-plugins
         uses: google-github-actions/upload-cloud-storage@main
         with:
-          credentials: $gcp_credi
+          credentials: ${{ secrets.gcp_credentials }}
           path: composer/plugins
           destination: europe-west1-demo-composer-fdc80108-bucket/
       - id: upload-dags
         uses: google-github-actions/upload-cloud-storage@main
         with:
-          credentials: ${{ env.gcp_cred }}
-          path: composer/dags
-          destination: europe-west1-demo-composer-fdc80108-bucket/
-  dev: 
-    if: ${{ github.ref == 'refs/heads/feature2' }}
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    environment:
-      name: dev
-    # Steps represent a sequence of tasks that will be executed as part of the job
-   
-    steps:
-      # Runs a set of commands using the runners shell      
-      - uses: actions/checkout@v2
-      - name: Start main
-        uses: ./.github/actions/deployment-action
-      - id: upload-plugins
-        uses: google-github-actions/upload-cloud-storage@main
-        with:
-          credentials: $gcp_credi
-          path: composer/plugins
-          destination: europe-west1-demo-composer-fdc80108-bucket/
-      - id: upload-dags
-        uses: google-github-actions/upload-cloud-storage@main
-        with:
-          credentials: ${{ env.gcp_cred }}
+          credentials: ${{ secrets.gcp_credentials }}
           path: composer/dags
           destination: europe-west1-demo-composer-fdc80108-bucket/
           
